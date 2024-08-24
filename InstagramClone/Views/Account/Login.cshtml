@@ -1,0 +1,59 @@
+﻿@model InstagramClone.Models.LoginViewModel
+
+<div class="auth-container">
+    <h2>Login</h2>
+
+    <form asp-action="Login" method="post">
+        <div class="form-group">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <span asp-validation-for="Username" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" type="password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Login</button>
+    </form>
+
+    <p class="auth-switch">
+        Don't have an account? 
+        @Html.ActionLink("Register here", "Register", "Account", new { }, new { @class = "link" })
+    </p>
+</div>
+
+@section Styles {
+    <style>
+        .auth-container {
+            max-width: 350px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .btn-block {
+            width: 100%;
+        }
+
+        .auth-switch {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .link {
+            color: #3897f0;
+            text-decoration: none;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+    </style>
+}
