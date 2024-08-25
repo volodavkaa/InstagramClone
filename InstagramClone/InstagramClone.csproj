@@ -15,4 +15,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Account\NewFolder\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
 </Project>

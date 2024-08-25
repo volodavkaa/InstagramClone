@@ -1,59 +1,90 @@
 ﻿@model InstagramClone.Models.LoginViewModel
 
-<div class="auth-container">
-    <h2>Login</h2>
-
-    <form asp-action="Login" method="post">
-        <div class="form-group">
-            <label asp-for="Username"></label>
-            <input asp-for="Username" class="form-control" />
-            <span asp-validation-for="Username" class="text-danger"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Password"></label>
-            <input asp-for="Password" class="form-control" type="password" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Login</button>
-    </form>
-
-    <p class="auth-switch">
-        Don't have an account? 
-        @Html.ActionLink("Register here", "Register", "Account", new { }, new { @class = "link" })
-    </p>
-</div>
-
-@section Styles {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram - Login</title>
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
-        .auth-container {
-            max-width: 350px;
-            margin: 50px auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #fff;
-            text-align: center;
+        
+
+        .screen-image {
+            position: relative;
+            top: 18%; 
+            left: 10%;
+            width: 80%; 
+            height: 65%; 
+            overflow: hidden;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .btn-block {
-            width: 100%;
-        }
-
-        .auth-switch {
-            margin-top: 20px;
-            font-size: 14px;
-        }
-
-        .link {
-            color: #3897f0;
-            text-decoration: none;
-        }
-
-        .link:hover {
-            text-decoration: underline;
-        }
+            .screen-image img {
+                width: 100%;
+                height: auto; 
+            }
     </style>
-}
+</head>
+<body>
+    <div class="page-container">
+        <div class="login-container">
+            <div class="login-image">
+                <div class="iphone-container">
+                    <div class="screen-image">
+                        <img id="changingImage" src="images/screen1.png" alt="Instagram Screenshot">
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-form">
+                <h1>Instagram</h1>
+                <form asp-action="Login" method="post">
+                    <input asp-for="Username" placeholder="Телефон, ім'я користувача або ел. адрес" required>
+                    <span asp-validation-for="Username" class="text-danger"></span>
+
+                    <input asp-for="Password" type="password" placeholder="Пароль" required>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+
+                    <input type="submit" value="Увійти" class="btn-block">
+                </form>
+                <div class="or-divider">АБО</div>
+                <div class="facebook-login">
+                    <i class="fab fa-facebook"></i>
+                    <a href="#">Увійти через Facebook</a>
+                </div>
+                <div style="margin-top: 20px;">
+                    <a href="#">Забули пароль?</a>
+                </div>
+            </div>
+        </div>
+        <div class="signup-link">
+            <p>
+                У вас ще немає аккаунта?
+                @Html.ActionLink("Зареєструватися", "Register", "Account", new { }, new { @class = "link" })
+            </p>
+        </div>
+    </div>
+    <script>
+        
+        const images = [
+            'images/screenshot1.png',
+            
+            'images/screenshot3.png'
+        ];
+
+        let currentIndex = 0;  
+
+        const imageElement = document.getElementById('changingImage');  
+
+        function changeImage() {
+            
+            currentIndex = (currentIndex + 1) % images.length;
+            imageElement.src = images[currentIndex];
+        }
+
+        
+        setInterval(changeImage, 3000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿body {
+    background-color: #fafafa;
+    font-family: 'Arial', sans-serif;
+}
+
+.page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 935px;
+    height: 600px;
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    padding: 20px;
+}
+
+.login-image {
+    width: 55%; /* Це можна залишити без змін */
+    background-image: url('~/images/instagram-screenshot.png');
+    background-size: cover;
+    background-position: center;
+    height: 100%; /* Додайте цю властивість, щоб зображення займало всю висоту контейнера */
+    overflow: hidden; /* Додайте цю властивість, щоб приховати частини зображення, що виходять за межі контейнера */
+}
+
+    .login-image img {
+        max-width: 100%; /* Це обмежить максимальну ширину зображення */
+        max-height: 100%; /* Це обмежить максимальну висоту зображення */
+        object-fit: cover; /* Ця властивість забезпечить обрізання зображення, якщо воно не підходить за розміром */
+    }
+
+
+.login-form {
+    width: 45%;
+    padding: 0 40px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Billabong', cursive;
+    font-size: 48px;
+    color: #262626;
+    margin-bottom: 30px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 9px 0;
+    margin: 5px 0 15px 0;
+    box-sizing: border-box;
+    border: 1px solid #dbdbdb;
+    background-color: #fafafa;
+    outline: none;
+    text-align: center;
+}
+
+.btn-block {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #3897f0;
+    border: none;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.or-divider {
+    position: relative;
+    text-align: center;
+    font-size: 14px;
+    color: #8e8e8e;
+    margin: 20px 0;
+}
+
+    .or-divider::before,
+    .or-divider::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 40%;
+        height: 1px;
+        background-color: #dbdbdb;
+    }
+
+    .or-divider::before {
+        left: 0;
+    }
+
+    .or-divider::after {
+        right: 0;
+    }
+
+.facebook-login {
+    color: #385185;
+    margin: 20px 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .facebook-login i {
+        margin-right: 8px;
+    }
+
+.signup-link {
+    text-align: center;
+    margin-top: 20px;
+    padding: 10px 0;
+    background-color: #fff;
+    border-top: 1px solid #dbdbdb;
+    width: 100%;
+    position: absolute;
+    bottom: 20px;
+}
+
+    .signup-link p {
+        margin: 0;
+    }
+
+    .signup-link a {
+        color: #3897f0;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
