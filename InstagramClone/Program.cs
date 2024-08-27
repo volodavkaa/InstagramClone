@@ -48,6 +48,7 @@ namespace InstagramClone
             services.AddControllersWithViews();
         }
 
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -75,5 +76,6 @@ namespace InstagramClone
                     pattern: "{controller=Account}/{action=Login}/{id?}"); 
             });
         }
+
     }
 }

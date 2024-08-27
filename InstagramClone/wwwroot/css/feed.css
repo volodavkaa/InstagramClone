@@ -1,0 +1,97 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background-color: #fafafa;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px 0;
+    border-bottom: 1px solid #dbdbdb;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo h1 {
+    font-family: 'Grand Hotel', cursive;
+    font-size: 2rem;
+    margin: 0;
+}
+
+.search-bar input {
+    padding: 5px;
+    background-color: #efefef;
+    border: none;
+    border-radius: 5px;
+}
+
+.nav-icons a {
+    color: #000;
+    margin-left: 20px;
+    font-size: 1.5rem;
+}
+
+main {
+    max-width: 940px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+.feed-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.post {
+    background-color: #fff;
+    border: 1px solid #dbdbdb;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #efefef;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+    .user-info img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+.post-image img {
+    width: 100%;
+    display: block;
+}
+
+.post-actions {
+    padding: 10px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+    .post-actions i {
+        margin-right: 10px;
+        font-size: 1.5rem;
+    }
+
+.post-likes, .post-caption {
+    padding: 10px;
+}

@@ -1,90 +1,86 @@
-﻿@model InstagramClone.Models.LoginViewModel
+﻿    @model InstagramClone.Models.LoginViewModel
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram - Login</title>
-    <link rel="stylesheet" href="~/css/login.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <style>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Instagram - Login</title>
+        <link rel="stylesheet" href="~/css/login.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+        <style>
         
 
-        .screen-image {
-            position: relative;
-            top: 18%; 
-            left: 10%;
-            width: 80%; 
-            height: 65%; 
-            overflow: hidden;
-        }
-
-            .screen-image img {
-                width: 100%;
-                height: auto; 
+            .screen-image {
+                position: relative;
+                top: 18%; 
+                left: 10%;
+                width: 80%; 
+                height: 65%; 
+                overflow: hidden;
             }
-    </style>
-</head>
-<body>
-    <div class="page-container">
-        <div class="login-container">
-            <div class="login-image">
-                <div class="iphone-container">
-                    <div class="screen-image">
-                        <img id="changingImage" src="images/screen1.png" alt="Instagram Screenshot">
+
+                .screen-image img {
+                    width: 100%;
+                    height: auto; 
+                }
+        </style>
+    </head>
+    <body>
+        <div class="page-container">
+            <div class="login-container">
+                <div class="login-image">
+                    <div class="iphone-container">
+                        <div class="screen-image">
+                            <img id="changingImage" src="images/screen1.png" alt="Instagram Screenshot">
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="login-form">
-                <h1>Instagram</h1>
-                <form asp-action="Login" method="post">
-                    <input asp-for="Username" placeholder="Телефон, ім'я користувача або ел. адрес" required>
-                    <span asp-validation-for="Username" class="text-danger"></span>
+                <div class="login-form">
+                    <h1>Instagram</h1>
+                    <form asp-action="Login" method="post">
+                        <input asp-for="Username" placeholder="Телефон, ім'я користувача або ел. адрес" required>
+                        <span asp-validation-for="Username" class="text-danger"></span>
 
-                    <input asp-for="Password" type="password" placeholder="Пароль" required>
-                    <span asp-validation-for="Password" class="text-danger"></span>
+                        <input asp-for="Password" type="password" placeholder="Пароль" required>
+                        <span asp-validation-for="Password" class="text-danger"></span>
 
-                    <input type="submit" value="Увійти" class="btn-block">
-                </form>
-                <div class="or-divider">АБО</div>
-                <div class="facebook-login">
-                    <i class="fab fa-facebook"></i>
-                    <a href="#">Увійти через Facebook</a>
-                </div>
+                        <input type="submit" value="Увійти" class="btn-block">
+                    </form>
+                    <div class="or-divider">АБО</div>
+                    <div class="facebook-login">
+                        <i class="fab fa-facebook"></i>
+                        <a href="#">Увійти через Facebook</a>
+                    </div>
                 <div style="margin-top: 20px;">
-                    <a href="#">Забули пароль?</a>
+                    @Html.ActionLink("Зареєструватися", "Register", "Account", new { }, new { @class = "link" })
+                </div>
+
                 </div>
             </div>
+            
         </div>
-        <div class="signup-link">
-            <p>
-                У вас ще немає аккаунта?
-                @Html.ActionLink("Зареєструватися", "Register", "Account", new { }, new { @class = "link" })
-            </p>
-        </div>
-    </div>
-    <script>
+        <script>
         
-        const images = [
-            'images/screenshot1.png',
+            const images = [
+                'images/screenshot1.png',
             
-            'images/screenshot3.png'
-        ];
+                'images/screenshot3.png'
+            ];
 
-        let currentIndex = 0;  
+            let currentIndex = 0;  
 
-        const imageElement = document.getElementById('changingImage');  
+            const imageElement = document.getElementById('changingImage');  
 
-        function changeImage() {
+            function changeImage() {
             
-            currentIndex = (currentIndex + 1) % images.length;
-            imageElement.src = images[currentIndex];
-        }
+                currentIndex = (currentIndex + 1) % images.length;
+                imageElement.src = images[currentIndex];
+            }
 
         
-        setInterval(changeImage, 3000);
-    </script>
-</body>
-</html>
+            setInterval(changeImage, 3000);
+        </script>
+    </body>
+    </html>

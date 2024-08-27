@@ -1,8 +1,63 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = null;
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <link rel="stylesheet" href="~/css/feed.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Instagram</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="nav-icons">
+                <a href="#"><i class="fas fa-home"></i></a>
+                <a href="#"><i class="fas fa-paper-plane"></i></a>
+                <a href="#"><i class="fas fa-compass"></i></a>
+                <a href="#"><i class="fas fa-heart"></i></a>
+                <a href="#"><i class="fas fa-user-circle"></i></a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="feed-container">
+            <!-- Початок постів у стрічці -->
+            <div class="post">
+                <div class="post-header">
+                    <div class="user-info">
+                        <img src="https://via.placeholder.com/32" alt="User Profile Picture">
+                        <span class="username">user_name</span>
+                    </div>
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <div class="post-image">
+                    <img src="https://via.placeholder.com/600x400" alt="Post Image">
+                </div>
+                <div class="post-actions">
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-comment"></i>
+                    <i class="fas fa-paper-plane"></i>
+                </div>
+                <div class="post-likes">
+                    <span>Liked by <strong>user1</strong> and <strong>others</strong></span>
+                </div>
+                <div class="post-caption">
+                    <strong>user_name</strong> Caption of the post.
+                </div>
+            </div>
+            <!-- Кінець постів у стрічці -->
+        </div>
+    </main>
+</body>
+</html>
