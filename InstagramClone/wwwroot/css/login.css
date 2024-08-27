@@ -22,18 +22,18 @@
 }
 
 .login-image {
-    width: 55%; /* Це можна залишити без змін */
+    width: 55%; 
     background-image: url('~/images/instagram-screenshot.png');
     background-size: cover;
     background-position: center;
-    height: 100%; /* Додайте цю властивість, щоб зображення займало всю висоту контейнера */
-    overflow: hidden; /* Додайте цю властивість, щоб приховати частини зображення, що виходять за межі контейнера */
+    height: 100%; 
+    overflow: hidden; 
 }
 
     .login-image img {
-        max-width: 100%; /* Це обмежить максимальну ширину зображення */
-        max-height: 100%; /* Це обмежить максимальну висоту зображення */
-        object-fit: cover; /* Ця властивість забезпечить обрізання зображення, якщо воно не підходить за розміром */
+        max-width: 100%; 
+        max-height: 100%; 
+        object-fit: cover; 
     }
 
 

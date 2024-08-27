@@ -22,5 +22,3 @@ namespace InstagramClone.Models
 
 
 }
-
-// Controllers/AccountController.cs
