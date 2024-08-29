@@ -1,4 +1,4 @@
-using InstagramClone.Models; 
+using InstagramClone.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,15 +34,15 @@ namespace InstagramClone
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Account/Login"; 
-                    options.AccessDeniedPath = "/Account/AccessDenied"; 
+                    options.LoginPath = "/Account/Login";
+                    options.AccessDeniedPath = "/Account/AccessDenied";
                 });
 
             services.AddControllersWithViews();
@@ -66,16 +66,33 @@ namespace InstagramClone
 
             app.UseRouting();
 
-            app.UseAuthentication(); 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Account}/{action=Login}/{id?}"); 
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+               
+                endpoints.MapControllerRoute(
+                    name: "profile",
+                    pattern: "profile/{id}",
+                    defaults: new { controller = "Profile", action = "Index" });
+            });
+
         }
 
+
+
     }
+
+
 }

@@ -1,4 +1,4 @@
-using InstagramClone.Models;
+п»їusing InstagramClone.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +11,7 @@ namespace InstagramClone.Controllers
 {
     public class DatabaseController : Controller
     {
-        // Метод для виконання SQL-команди
+
         public IActionResult UpdateDatabase()
         {
             string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=InstagramCloneDb;Trusted_Connection=True;";
@@ -26,12 +26,12 @@ namespace InstagramClone.Controllers
                     using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                     {
                         command.ExecuteNonQuery();
-                        ViewBag.Message = "Стовпчик ConfirmPassword успішно змінено.";
+                        ViewBag.Message = "Г‘ГІГ®ГўГЇГ·ГЁГЄ ConfirmPassword ГіГ±ГЇВіГёГ­Г® Г§Г¬ВіГ­ГҐГ­Г®.";
                     }
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Сталася помилка: " + ex.Message;
+                    ViewBag.Message = "Г‘ГІГ Г«Г Г±Гї ГЇГ®Г¬ГЁГ«ГЄГ : " + ex.Message;
                 }
             }
 
@@ -47,20 +47,20 @@ namespace InstagramClone.Controllers
             _context = context;
         }
 
-        // GET: Account/Login
+
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
-        // POST: Account/Login
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Перевірка користувача у базі даних
+
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
 
@@ -69,14 +69,14 @@ namespace InstagramClone.Controllers
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, model.Username),
-                        new Claim("UserId", user.Id.ToString()) // Додаємо ID користувача в клейми
+                        new Claim("UserId", user.Id.ToString())
                     };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     var authProperties = new AuthenticationProperties
                     {
-                        // Можна додати властивості, наприклад, збереження логіну
+
                     };
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
@@ -86,7 +86,7 @@ namespace InstagramClone.Controllers
 
                 }
 
-                ModelState.AddModelError(string.Empty, "Невірний логін або пароль.");
+                ModelState.AddModelError(string.Empty, "ГЌГҐГўВіГ°Г­ГЁГ© Г«Г®ГЈВіГ­ Г ГЎГ® ГЇГ Г°Г®Г«Гј.");
             }
 
             return View(model);
@@ -109,7 +109,7 @@ namespace InstagramClone.Controllers
                 {
                     Username = model.Username,
                     Email = model.Email,
-                    Password = model.Password // Ви можете використати хешування пароля
+                    Password = model.Password
                 };
 
                 _context.Users.Add(user);
@@ -136,7 +136,12 @@ namespace InstagramClone.Controllers
         {
             return View();
         }
+        public IActionResult Profile()
+        {
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name);
+            return View(user);
+        }
+
     }
 }
-
-// ???????? ???????? ????? ???? ?? ???????? ????? ???? ???????? ????? ???????? ???????? ???????? ???????? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ???? ??

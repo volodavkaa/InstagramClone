@@ -7,8 +7,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram</title>
-    <link rel="stylesheet" href="~/css/feed.css">
+    <title>Instagram Profile</title>
+    <link rel="stylesheet" href="~/css/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -25,39 +25,40 @@
                 <a href="#"><i class="fas fa-paper-plane"></i></a>
                 <a href="#"><i class="fas fa-compass"></i></a>
                 <a href="#"><i class="fas fa-heart"></i></a>
-                <a href="#"><i class="fas fa-user-circle"></i></a>
+                <a href="@Url.Action("Profile", "Account")"><i class="fas fa-user-circle"></i></a>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="feed-container">
-            <!-- Початок постів у стрічці -->
-            <div class="post">
-                <div class="post-header">
-                    <div class="user-info">
-                        <img src="https://via.placeholder.com/32" alt="User Profile Picture">
-                        <span class="username">user_name</span>
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-image">
+                    <img src="https://via.placeholder.com/150" alt="User Profile Picture">
+                </div>
+                <div class="profile-info">
+                    <h2 class="username">username</h2>
+                    <div class="profile-stats">
+                        <span><strong>20</strong> posts</span>
+                        <span><strong>300</strong> followers</span>
+                        <span><strong>180</strong> following</span>
                     </div>
-                    <i class="fas fa-ellipsis-h"></i>
-                </div>
-                <div class="post-image">
-                    <img src="https://via.placeholder.com/600x400" alt="Post Image">
-                </div>
-                <div class="post-actions">
-                    <i class="fas fa-heart"></i>
-                    <i class="fas fa-comment"></i>
-                    <i class="fas fa-paper-plane"></i>
-                </div>
-                <div class="post-likes">
-                    <span>Liked by <strong>user1</strong> and <strong>others</strong></span>
-                </div>
-                <div class="post-caption">
-                    <strong>user_name</strong> Caption of the post.
                 </div>
             </div>
-            <!-- Кінець постів у стрічці -->
+            <div class="profile-posts">
+                <div class="post">
+                    <img src="https://via.placeholder.com/300" alt="Post Image">
+                </div>
+                <div class="post">
+                    <img src="https://via.placeholder.com/300" alt="Post Image">
+                </div>
+                <div class="post">
+                    <img src="https://via.placeholder.com/300" alt="Post Image">
+                </div>
+                <!-- Додайте більше постів тут -->
+            </div>
         </div>
     </main>
 </body>
 </html>
+
