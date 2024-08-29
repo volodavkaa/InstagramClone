@@ -27,3 +27,4 @@ public class ApplicationDbContext : DbContext
             .HasForeignKey(p => p.UserId);
     }
 }
+
