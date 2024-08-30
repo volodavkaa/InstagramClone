@@ -1,9 +1,12 @@
 ﻿@model InstagramClone.Models.UserProfileViewModel
 
 <div class="profile-header">
+    <link rel="stylesheet" href="~/css/profile.css">
     <div class="profile-picture">
+
         <img src="@Model.ProfilePictureUrl" alt="Profile Picture" />
     </div>
+
     <div class="profile-info">
         <h2>@Model.Username</h2>
         <ul>
