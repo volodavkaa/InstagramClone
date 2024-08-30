@@ -136,12 +136,7 @@ namespace InstagramClone.Controllers
         {
             return View();
         }
-        public IActionResult Profile()
-        {
-
-            var user = _context.Users.FirstOrDefault(u => u.Username == User.Identity.Name);
-            return View(user);
-        }
+        
 
     }
 }

@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace InstagramClone.Views.Account
+namespace InstagramClone.Views.Profile
 {
-    public class ProfileModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {

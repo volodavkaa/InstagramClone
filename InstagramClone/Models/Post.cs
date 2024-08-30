@@ -1,7 +1,4 @@
-﻿using System;
-using InstagramClone.Models;
-
-namespace InstagramClone.Models
+﻿namespace InstagramClone.Models
 {
     public class Post
     {
@@ -11,7 +8,8 @@ namespace InstagramClone.Models
 
         public int UserId { get; set; }
         public User User { get; set; } = new User();
+
+        // Додайте цю властивість
+        public string ImageUrl { get; set; } = string.Empty;
     }
-
-
 }

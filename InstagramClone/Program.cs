@@ -74,19 +74,17 @@ namespace InstagramClone
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Account}/{action=Login}/{id?}");
-            });
-            app.UseEndpoints(endpoints =>
-            {
+
                 endpoints.MapControllerRoute(
-                    name: "default",
+                    name: "home",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-               
                 endpoints.MapControllerRoute(
                     name: "profile",
-                    pattern: "profile/{id}",
+                    pattern: "profile/{id?}",
                     defaults: new { controller = "Profile", action = "Index" });
             });
+
 
         }
 

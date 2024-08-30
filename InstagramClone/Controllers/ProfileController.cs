@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using InstagramClone.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using InstagramClone.Models;
+using System.Threading.Tasks;
 
 namespace InstagramClone.Controllers
 {
@@ -28,7 +27,15 @@ namespace InstagramClone.Controllers
                 return NotFound();
             }
 
-            return View(user);
+            var model = new UserProfileViewModel
+            {
+                Username = user.Username,
+                FollowersCount = user.FollowersCount,
+                FollowingCount = user.FollowingCount,
+                Posts = user.Posts.ToList()
+            };
+
+            return View(model);
         }
     }
 }

@@ -1,0 +1,25 @@
+﻿@model InstagramClone.Models.UserProfileViewModel
+
+<div class="profile-header">
+    <div class="profile-picture">
+        <img src="@Model.ProfilePictureUrl" alt="Profile Picture" />
+    </div>
+    <div class="profile-info">
+        <h2>@Model.Username</h2>
+        <ul>
+            <li>@Model.Posts.Count публікацій</li>
+            <li>@Model.FollowersCount підписників</li>
+            <li>@Model.FollowingCount підписок</li>
+        </ul>
+    </div>
+</div>
+
+<div class="profile-posts">
+    @foreach (var post in Model.Posts)
+    {
+        <div class="post">
+            <img src="@post.ImageUrl" alt="Post Image" />
+            <p>@post.Content</p>
+        </div>
+    }
+</div>
