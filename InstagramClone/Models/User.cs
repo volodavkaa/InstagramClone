@@ -16,8 +16,13 @@ public class User
     public string Password { get; set; } = string.Empty;
 
     // Властивості для підписників і підписок
-    public ICollection<User> Followers { get; set; } = new List<User>();
-    public ICollection<User> Following { get; set; } = new List<User>();
+    
+        
+
+        public ICollection<UserFollower> Followers { get; set; }
+        public ICollection<UserFollower> Following { get; set; }
+   
+
 
     // Зв’язок з постами
     public ICollection<Post> Posts { get; set; } = new List<Post>();

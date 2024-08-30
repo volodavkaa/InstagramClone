@@ -3,39 +3,56 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace InstagramClone.Controllers
+public class ProfileController : Controller
 {
-    public class ProfileController : Controller
+    private readonly ApplicationDbContext _context;
+
+    public ProfileController(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
+        _context = context;
+    }
 
-        public ProfileController(ApplicationDbContext context)
+    public async Task<IActionResult> Index(int? id)
+    {
+        if (id == null)
         {
-            _context = context;
-        }
+            // Отримуємо ID поточного користувача з Claims
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
 
-        public async Task<IActionResult> Index(int id)
-        {
-            var user = await _context.Users
-                .Include(u => u.Followers)
-                .Include(u => u.Following)
-                .Include(u => u.Posts)
-                .FirstOrDefaultAsync(u => u.Id == id);
-
-            if (user == null)
+            if (userIdClaim == null)
             {
-                return NotFound();
+                // Якщо не вдалось отримати ID, повертаємо помилку доступу
+                return RedirectToAction("AccessDenied", "Account");
             }
 
-            var model = new UserProfileViewModel
-            {
-                Username = user.Username,
-                FollowersCount = user.FollowersCount,
-                FollowingCount = user.FollowingCount,
-                Posts = user.Posts.ToList()
-            };
+            // Конвертуємо значення ID з Claim до типу int
+            int userId = int.Parse(userIdClaim.Value);
 
-            return View(model);
+            // Перенаправляємо на сторінку профілю з підставленим ID
+            return RedirectToAction("Index", new { id = userId });
         }
+
+        // Завантаження даних користувача за вказаним ID
+        var user = await _context.Users
+            .Include(u => u.Followers)
+            .Include(u => u.Following)
+            .Include(u => u.Posts)
+            .FirstOrDefaultAsync(u => u.Id == id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new UserProfileViewModel
+        {
+            Username = user.Username,
+            FollowersCount = user.FollowersCount,
+            FollowingCount = user.FollowingCount,
+            Posts = user.Posts.ToList()
+        };
+
+        return View(model);
     }
+
 }
