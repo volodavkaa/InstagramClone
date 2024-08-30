@@ -15,7 +15,7 @@ public class User
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
 
-    // Властивості для підписників і підписок
+  
     
         
 
@@ -24,10 +24,10 @@ public class User
    
 
 
-    // Зв’язок з постами
+  
     public ICollection<Post> Posts { get; set; } = new List<Post>();
 
-    // Підрахунок підписників і підписок
+    
     public int FollowersCount => Followers?.Count ?? 0;
     public int FollowingCount => Following?.Count ?? 0;
 }
