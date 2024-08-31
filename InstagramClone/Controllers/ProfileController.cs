@@ -1,4 +1,5 @@
 ﻿using InstagramClone.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -54,12 +55,22 @@ public class ProfileController : Controller
 
         return View(model);
     }
-    [HttpPost]
+
+    [Authorize]
     public async Task<IActionResult> EditProfile(IFormFile profilePicture, string profileHeading, string profileBio)
     {
-        var userId = int.Parse(User.Claims.FirstOrDefault(c => c.Type == "UserID").Value);
-        var user = await _context.Users.FindAsync(userId);
+        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
+        if (userIdClaim == null)
+        {
+            return RedirectToAction("Login", "Account");
+        }
 
+        if (!int.TryParse(userIdClaim.Value, out var userId))
+        {
+            return BadRequest("Invalid User ID");
+        }
+
+        var user = await _context.Users.FindAsync(userId);
         if (user == null)
         {
             return NotFound();
@@ -67,15 +78,15 @@ public class ProfileController : Controller
 
         if (profilePicture != null)
         {
-            using (var memoryStream = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
-                await profilePicture.CopyToAsync(memoryStream);
-                user.ProfilePicture = memoryStream.ToArray();
+                await profilePicture.CopyToAsync(ms);
+                user.ProfilePicture = ms.ToArray();
             }
         }
 
-        user.ProfileHeading = profileHeading;
-        user.ProfileBio = profileBio;
+        user.ProfileHeading = profileHeading ?? user.ProfileHeading ?? string.Empty; // Запобігаємо NULL для ProfileHeading
+        user.ProfileBio = profileBio ?? user.ProfileBio ?? string.Empty; // Запобігаємо NULL для ProfileBio
 
         try
         {
@@ -83,13 +94,16 @@ public class ProfileController : Controller
         }
         catch (DbUpdateException ex)
         {
-            // Логування помилки для подальшого аналізу
             Console.WriteLine(ex.InnerException?.Message);
             throw;
         }
 
         return RedirectToAction("Index", new { id = user.Id });
     }
+
+
+
+
 
 
 
