@@ -1,12 +1,12 @@
 ﻿@model InstagramClone.Models.UserProfileViewModel
+
 <link rel="stylesheet" href="/css/profile.css">
 <link rel="stylesheet" href="~/css/edit-profile.css">
 <script src="~/js/edit-profile.js"></script>
 
-
 <div class="profile-header">
     <div class="profile-picture">
-        <img src="@Model.ProfilePictureUrl" alt="Profile Picture" />
+        <img src="data:image/jpeg;base64,@Model.ProfilePictureUrl" alt="Profile Picture" />
     </div>
 
     <div class="profile-info">
@@ -20,20 +20,20 @@
     </div>
 </div>
 
-
 <div id="editProfileModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Редагувати профіль</h2>
-        <form asp-action="EditProfile" enctype="multipart/form-data">
+        <!-- Вставте свій код форми тут -->
+        <form asp-action="EditProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
             <label for="profilePicture">Змінити аватар:</label>
             <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
 
             <label for="profileHeading">Заголовок (до 20 символів):</label>
-            <input type="text" id="profileHeading" name="profileHeading" maxlength="20" />
+            <input type="text" id="profileHeading" name="profileHeading" maxlength="20" value="@Model.ProfileHeading" />
 
             <label for="profileBio">Про себе (до 800 символів):</label>
-            <textarea id="profileBio" name="profileBio" maxlength="800"></textarea>
+            <textarea id="profileBio" name="profileBio" maxlength="800">@Model.ProfileBio</textarea>
             <p id="charCount">Залишилось 800 символів</p>
 
             <button type="submit">Зберегти</button>
@@ -41,14 +41,20 @@
     </div>
 </div>
 
+
 <div class="profile-posts">
     @foreach (var post in Model.Posts)
     {
-
         <div class="post">
             <img src="@post.ImageUrl" alt="Post Image" />
             <p>@post.Content</p>
         </div>
-
     }
+</div>
+
+<!-- Відображення біо та заголовку профілю -->
+<div class="profile-bio-heading">
+    
+    <h2>@Model.ProfileHeading</h2>
+    <p>@Model.ProfileBio</p>
 </div>

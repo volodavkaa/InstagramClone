@@ -60,33 +60,26 @@ namespace InstagramClone.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 var user = await _context.Users
                     .FirstOrDefaultAsync(u => u.Username == model.Username && u.Password == model.Password);
 
                 if (user != null)
                 {
                     var claims = new List<Claim>
-                    {
-                        new Claim(ClaimTypes.Name, model.Username),
-                        new Claim("UserId", user.Id.ToString())
-                    };
+            {
+                new Claim(ClaimTypes.Name, model.Username),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  // Важливо мати правильний Claim
+            };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    var authProperties = new AuthenticationProperties
-                    {
-
-                    };
-
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                        new ClaimsPrincipal(claimsIdentity), authProperties);
+                        new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Index", "Home");
-
+                    return RedirectToAction("Index", "Home");  // Перенаправляємо на сторінку профілю
                 }
 
-                ModelState.AddModelError(string.Empty, "Íåâ³ðíèé ëîã³í àáî ïàðîëü.");
+                ModelState.AddModelError(string.Empty, "Невірний логін або пароль.");
             }
 
             return View(model);

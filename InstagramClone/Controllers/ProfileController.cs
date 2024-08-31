@@ -1,4 +1,6 @@
 ﻿using InstagramClone.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,70 +15,65 @@ public class ProfileController : Controller
     {
         _context = context;
     }
-
-    public async Task<IActionResult> Index(int? id)
+    
+    [Authorize]
+    public async Task<IActionResult> Index()
     {
-        if (id == null)
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
         {
-            
-            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
-
-            if (userIdClaim == null)
-            {
-                
-                return RedirectToAction("AccessDenied", "Account");
-            }
-
-            
-            int userId = int.Parse(userIdClaim.Value);
-
-            
-            return RedirectToAction("Index", new { id = userId });
+            return NotFound("User is not authenticated."); // Повідомлення для відлагодження
         }
 
         var user = await _context.Users
+            .Include(u => u.Posts)
             .Include(u => u.Followers)
             .Include(u => u.Following)
-            .Include(u => u.Posts)
-            .FirstOrDefaultAsync(u => u.Id == id);
+            .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
 
         if (user == null)
         {
-            return NotFound();
+            return NotFound("User not found."); // Повідомлення для відлагодження
         }
 
         var model = new UserProfileViewModel
         {
             Username = user.Username,
+            ProfilePictureUrl = Convert.ToBase64String(user.ProfilePicture),
+            ProfileHeading = user.ProfileHeading,
+            ProfileBio = user.ProfileBio,
+            Posts = user.Posts.Select(p => new PostViewModel
+            {
+                ImageUrl = p.ImageUrl,
+                Content = p.Content
+            }).ToList(),
             FollowersCount = user.FollowersCount,
-            FollowingCount = user.FollowingCount,
-            Posts = user.Posts.ToList()
+            FollowingCount = user.FollowingCount
         };
 
         return View(model);
     }
 
+
     [Authorize]
     public async Task<IActionResult> EditProfile(IFormFile profilePicture, string profileHeading, string profileBio)
     {
-        var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "UserId");
-        if (userIdClaim == null)
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
         {
             return RedirectToAction("Login", "Account");
         }
 
-        if (!int.TryParse(userIdClaim.Value, out var userId))
-        {
-            return BadRequest("Invalid User ID");
-        }
-
-        var user = await _context.Users.FindAsync(userId);
+        // Використання FirstOrDefaultAsync замість FindAsync
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
         if (user == null)
         {
             return NotFound();
         }
 
-        if (profilePicture != null)
+        if (profilePicture != null && profilePicture.Length > 0)
         {
             using (var ms = new MemoryStream())
             {
@@ -85,8 +82,15 @@ public class ProfileController : Controller
             }
         }
 
-        user.ProfileHeading = profileHeading ?? user.ProfileHeading ?? string.Empty; // Запобігаємо NULL для ProfileHeading
-        user.ProfileBio = profileBio ?? user.ProfileBio ?? string.Empty; // Запобігаємо NULL для ProfileBio
+        if (!string.IsNullOrEmpty(profileHeading))
+        {
+            user.ProfileHeading = profileHeading;
+        }
+
+        if (!string.IsNullOrEmpty(profileBio))
+        {
+            user.ProfileBio = profileBio;
+        }
 
         try
         {
@@ -100,6 +104,10 @@ public class ProfileController : Controller
 
         return RedirectToAction("Index", new { id = user.Id });
     }
+
+
+
+
 
 
 

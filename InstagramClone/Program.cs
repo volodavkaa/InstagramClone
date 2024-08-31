@@ -81,9 +81,11 @@ namespace InstagramClone
 
                 endpoints.MapControllerRoute(
                     name: "profile",
-                    pattern: "profile/{id?}",
+                    pattern: "profile",
                     defaults: new { controller = "Profile", action = "Index" });
+
             });
+
 
 
         }
