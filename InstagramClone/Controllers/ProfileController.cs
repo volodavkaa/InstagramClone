@@ -66,7 +66,7 @@ public class ProfileController : Controller
             return RedirectToAction("Login", "Account");
         }
 
-        // Використання FirstOrDefaultAsync замість FindAsync
+        
         var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
         if (user == null)
         {

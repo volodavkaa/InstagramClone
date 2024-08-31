@@ -68,7 +68,7 @@ namespace InstagramClone.Controllers
                     var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, model.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  // Важливо мати правильний Claim
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  
             };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
@@ -76,7 +76,7 @@ namespace InstagramClone.Controllers
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Index", "Home");  // Перенаправляємо на сторінку профілю
+                    return RedirectToAction("Index", "Home");  
                 }
 
                 ModelState.AddModelError(string.Empty, "Невірний логін або пароль.");

@@ -20,11 +20,16 @@
     </div>
 </div>
 
+<div class="profile-bio-heading">
+    <h2>@Model.ProfileHeading</h2>
+    <p>@Model.ProfileBio</p>
+</div>
+
 <div id="editProfileModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Редагувати профіль</h2>
-        <!-- Вставте свій код форми тут -->
+       
         <form asp-action="EditProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
             <label for="profilePicture">Змінити аватар:</label>
             <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
@@ -52,9 +57,4 @@
     }
 </div>
 
-<!-- Відображення біо та заголовку профілю -->
-<div class="profile-bio-heading">
-    
-    <h2>@Model.ProfileHeading</h2>
-    <p>@Model.ProfileBio</p>
-</div>
+
