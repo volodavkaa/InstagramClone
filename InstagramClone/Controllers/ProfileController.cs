@@ -23,7 +23,7 @@ public class ProfileController : Controller
 
         if (userId == null)
         {
-            return NotFound("User is not authenticated."); // Повідомлення для відлагодження
+            return NotFound("User is not authenticated."); 
         }
 
         var user = await _context.Users
@@ -34,7 +34,7 @@ public class ProfileController : Controller
 
         if (user == null)
         {
-            return NotFound("User not found."); // Повідомлення для відлагодження
+            return NotFound("User not found."); 
         }
 
         var model = new UserProfileViewModel

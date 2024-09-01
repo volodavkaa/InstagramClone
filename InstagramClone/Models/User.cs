@@ -15,8 +15,8 @@ public class User
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
     public byte[]? ProfilePicture { get; set; }
-    public string ProfileHeading { get; set; } = string.Empty;  // Заголовок (до 20 символів)
-    public string ProfileBio { get; set; } = string.Empty;     // Опис (до 800 символів)
+    public string ProfileHeading { get; set; } = string.Empty;  
+    public string ProfileBio { get; set; } = string.Empty;     
     public ICollection<UserFollower> Followers { get; set; }
     public ICollection<UserFollower> Following { get; set; }
     
