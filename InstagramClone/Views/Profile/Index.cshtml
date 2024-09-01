@@ -1,60 +1,70 @@
 ﻿@model InstagramClone.Models.UserProfileViewModel
 
-<link rel="stylesheet" href="/css/profile.css">
-<link rel="stylesheet" href="~/css/edit-profile.css">
-<script src="~/js/edit-profile.js"></script>
-
-<div class="profile-header">
-    <div class="profile-picture">
-        <img src="data:image/jpeg;base64,@Model.ProfilePictureUrl" alt="Profile Picture" />
-    </div>
-
-    <div class="profile-info">
-        <h2>@Model.Username</h2>
-        <ul>
-            <li>@Model.Posts.Count публікацій</li>
-            <li>@Model.FollowersCount підписників</li>
-            <li>@Model.FollowingCount підписок</li>
-        </ul>
-        <button id="editProfileButton" class="edit-profile-button">Редагувати профіль</button>
-    </div>
-</div>
-
-<div class="profile-bio-heading">
-    <h2>@Model.ProfileHeading</h2>
-    <p>@Model.ProfileBio</p>
-</div>
-
-<div id="editProfileModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Редагувати профіль</h2>
-       
-        <form asp-action="EditProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
-            <label for="profilePicture">Змінити аватар:</label>
-            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
-
-            <label for="profileHeading">Заголовок (до 20 символів):</label>
-            <input type="text" id="profileHeading" name="profileHeading" maxlength="20" value="@Model.ProfileHeading" />
-
-            <label for="profileBio">Про себе (до 800 символів):</label>
-            <textarea id="profileBio" name="profileBio" maxlength="800">@Model.ProfileBio</textarea>
-            <p id="charCount">Залишилось 800 символів</p>
-
-            <button type="submit">Зберегти</button>
-        </form>
-    </div>
-</div>
-
-
-<div class="profile-posts">
-    @foreach (var post in Model.Posts)
-    {
-        <div class="post">
-            <img src="@post.ImageUrl" alt="Post Image" />
-            <p>@post.Content</p>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Username - Профіль</title>
+    <link rel="stylesheet" href="~/css/profile.css">
+    <link rel="stylesheet" href="~/css/edit-profile.css">
+    <script src="~/js/edit-profile.js"></script>
+    <script src="~/js/profile.js"></script>
+</head>
+<body>
+    <div class="profile-header">
+        <div class="profile-picture">
+            <img src="data:image/jpeg;base64,@Model.ProfilePictureUrl" alt="Profile Picture" />
+            <input type="file" id="profilePicture" name="profilePicture" accept="image/*" style="display:none;" />
         </div>
-    }
-</div>
 
+        <div class="profile-info">
+            <div class="username-section">
+                <h2>@Model.Username</h2>
+                <div class="button-group">
+                    <button id="editProfileButton" class="edit-profile-button">Редагувати профіль</button>
+                    <button id="archiveButton" class="archive-button">Переглянути архів</button>
+                </div>
+            </div>
+            <ul>
+                <li>@Model.Posts.Count публікацій</li>
+                <li>@Model.FollowersCount підписників</li>
+                <li>@Model.FollowingCount підписок</li>
+            </ul>
+            <h3 class="profile-heading">@Model.ProfileHeading</h3> 
+            <p class="profile-bio">@Model.ProfileBio</p>
+        </div>
+    </div>
 
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Редагувати профіль</h2>
+
+            <form asp-action="EditProfile" asp-controller="Profile" method="post" enctype="multipart/form-data">
+                <label for="profilePicture">Змінити аватар:</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" />
+
+                <label for="profileHeading">Заголовок (до 20 символів):</label>
+                <input type="text" id="profileHeading" name="profileHeading" maxlength="20" value="@Model.ProfileHeading" />
+
+                <label for="profileBio">Про себе (до 800 символів):</label>
+                <textarea id="profileBio" name="profileBio" maxlength="800">@Model.ProfileBio</textarea>
+                <p id="charCount">Залишилось 800 символів</p>
+
+                <button type="submit">Зберегти</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="profile-posts">
+        @foreach (var post in Model.Posts)
+        {
+            <div class="post">
+                <img src="@post.ImageUrl" alt="Post Image" />
+                <p>@post.Content</p>
+            </div>
+        }
+    </div>
+</body>
+</html>
