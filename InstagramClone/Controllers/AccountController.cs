@@ -11,7 +11,6 @@ namespace InstagramClone.Controllers
 {
     public class DatabaseController : Controller
     {
-
         public IActionResult UpdateDatabase()
         {
             string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=InstagramCloneDb;Trusted_Connection=True;";
@@ -26,34 +25,35 @@ namespace InstagramClone.Controllers
                     using (SqlCommand command = new SqlCommand(sqlQuery, connection))
                     {
                         command.ExecuteNonQuery();
-                        ViewBag.Message = "Ñòîâï÷èê ConfirmPassword óñï³øíî çì³íåíî.";
+                        ViewBag.Message = "Стовпчик ConfirmPassword успішно змінено.";
                     }
                 }
                 catch (Exception ex)
                 {
-                    ViewBag.Message = "Ñòàëàñÿ ïîìèëêà: " + ex.Message;
+                    ViewBag.Message = "Сталася помилка: " + ex.Message;
                 }
             }
 
             return View();
         }
     }
+
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController(ApplicationDbContext context, IWebHostEnvironment hostingEnvironment)
         {
             _context = context;
+            _hostingEnvironment = hostingEnvironment;
         }
-
 
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
-
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -66,17 +66,17 @@ namespace InstagramClone.Controllers
                 if (user != null)
                 {
                     var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, model.Username),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())  
-            };
+                    {
+                        new Claim(ClaimTypes.Name, model.Username),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    };
 
                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                     await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                         new ClaimsPrincipal(claimsIdentity));
 
-                    return RedirectToAction("Index", "Home");  
+                    return RedirectToAction("Index", "Home");
                 }
 
                 ModelState.AddModelError(string.Empty, "Невірний логін або пароль.");
@@ -85,24 +85,29 @@ namespace InstagramClone.Controllers
             return View(model);
         }
 
-        // GET: Account/Register
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
-        // POST: Account/Register
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
+                
+                var defaultAvatarPath = Path.Combine(_hostingEnvironment.WebRootPath, "images/default-avatar.png");
+                var defaultAvatarBytes = await System.IO.File.ReadAllBytesAsync(defaultAvatarPath);
+
                 var user = new User
                 {
                     Username = model.Username,
                     Email = model.Email,
-                    Password = model.Password
+                    Password = model.Password,
+                    ProfileBio = string.Empty,
+                    ProfileHeading = string.Empty,
+                    ProfilePicture = defaultAvatarBytes 
                 };
 
                 _context.Users.Add(user);
@@ -114,8 +119,6 @@ namespace InstagramClone.Controllers
             return View(model);
         }
 
-
-        // POST: Account/Logout
         [HttpPost]
         public async Task<IActionResult> Logout()
         {
@@ -123,13 +126,10 @@ namespace InstagramClone.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        // GET: Account/AccessDenied
         [HttpGet]
         public IActionResult AccessDenied()
         {
             return View();
         }
-        
-
     }
 }
