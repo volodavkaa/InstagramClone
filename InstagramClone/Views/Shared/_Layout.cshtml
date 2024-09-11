@@ -13,7 +13,7 @@
     <script src="~/js/profile.js"></script>
 </head>
 <body>
-    @if (User.Identity.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated && !ViewContext.RouteData.Values["controller"].ToString().Equals("Account", StringComparison.OrdinalIgnoreCase))
     {
         <div class="sidebar">
             <div>
