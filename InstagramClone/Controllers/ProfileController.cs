@@ -1,118 +1,109 @@
 ﻿using InstagramClone.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.IO;
 
-public class ProfileController : Controller
+namespace InstagramClone.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public ProfileController(ApplicationDbContext context)
+    public class ProfileController : Controller
     {
-        _context = context;
-    }
-    
-    [Authorize]
-    public async Task<IActionResult> Index()
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        private readonly ApplicationDbContext _context;
 
-        if (userId == null)
+        public ProfileController(ApplicationDbContext context)
         {
-            return NotFound("User is not authenticated."); 
+            _context = context;
         }
 
-        var user = await _context.Users
-            .Include(u => u.Posts)
-            .Include(u => u.Followers)
-            .Include(u => u.Following)
-            .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-
-        if (user == null)
+        [Authorize]
+        public async Task<IActionResult> Index()
         {
-            return NotFound("User not found."); 
-        }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        var model = new UserProfileViewModel
-        {
-            Username = user.Username,
-            ProfilePictureUrl = Convert.ToBase64String(user.ProfilePicture),
-            ProfileHeading = user.ProfileHeading,
-            ProfileBio = user.ProfileBio,
-            Posts = user.Posts.Select(p => new PostViewModel
+            if (userId == null)
             {
-                ImageUrl = p.ImageUrl,
-                Content = p.Content
-            }).ToList(),
-            FollowersCount = user.FollowersCount,
-            FollowingCount = user.FollowingCount
-        };
-
-        return View(model);
-    }
-
-
-    [Authorize]
-    public async Task<IActionResult> EditProfile(IFormFile profilePicture, string profileHeading, string profileBio)
-    {
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-        if (userId == null)
-        {
-            return RedirectToAction("Login", "Account");
-        }
-
-        
-        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
-        if (user == null)
-        {
-            return NotFound();
-        }
-
-        if (profilePicture != null && profilePicture.Length > 0)
-        {
-            using (var ms = new MemoryStream())
-            {
-                await profilePicture.CopyToAsync(ms);
-                user.ProfilePicture = ms.ToArray();
+                return NotFound("User is not authenticated.");
             }
+
+            var user = await _context.Users
+                .Include(u => u.Posts)
+                .Include(u => u.Followers)
+                .Include(u => u.Following)
+                .FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var model = new UserProfileViewModel
+            {
+                Username = user.Username,
+                ProfilePictureUrl = Convert.ToBase64String(user.ProfilePicture),
+                ProfileHeading = user.ProfileHeading,
+                ProfileBio = user.ProfileBio,
+                Posts = user.Posts.Select(p => new PostViewModel
+                {
+                    ImageUrl = p.ImageUrl,
+                    Content = p.Content
+                }).ToList(),
+                FollowersCount = user.FollowersCount,
+                FollowingCount = user.FollowingCount
+            };
+
+            return View(model);
         }
 
-        if (!string.IsNullOrEmpty(profileHeading))
+        [Authorize]
+        public async Task<IActionResult> EditProfile(IFormFile profilePicture, string profileHeading, string profileBio)
         {
-            user.ProfileHeading = profileHeading;
-        }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-        if (!string.IsNullOrEmpty(profileBio))
-        {
-            user.ProfileBio = profileBio;
-        }
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (DbUpdateException ex)
-        {
-            Console.WriteLine(ex.InnerException?.Message);
-            throw;
-        }
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id.ToString() == userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        return RedirectToAction("Index", new { id = user.Id });
+            if (profilePicture != null && profilePicture.Length > 0)
+            {
+                using (var ms = new MemoryStream())
+                {
+                    await profilePicture.CopyToAsync(ms);
+                    user.ProfilePicture = ms.ToArray();
+                }
+            }
+
+            if (!string.IsNullOrEmpty(profileHeading))
+            {
+                user.ProfileHeading = profileHeading;
+            }
+
+            if (!string.IsNullOrEmpty(profileBio))
+            {
+                user.ProfileBio = profileBio;
+            }
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine(ex.InnerException?.Message);
+                throw;
+            }
+
+            return RedirectToAction("Index", new { id = user.Id });
+        }
     }
-
-
-
-
-
-
-
-
-
-
-
 }

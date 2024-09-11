@@ -1,62 +1,31 @@
-﻿﻿@{
-    Layout = null;
+﻿@model InstagramClone.Models.HomeViewModel
+
+@{
+    ViewData["Title"] = "Головна";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="~/css/feed.css">
-</head>
-<body>
-    <div class="sidebar">
-        <div>
-            <div class="logo">
-                <h1>Instagram</h1>
-            </div>
-            <div class="menu">
-                <a href="#" class="menu-item">
-                    <i class="fas fa-home"></i> Головна
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-search"></i> Пошуковий Запит
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-compass"></i> Цікаве
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-video"></i> Reels
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-envelope"></i> Повідомлення
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-heart"></i> Сповіщеняя
-                </a>
-                <a href="#" class="menu-item">
-                    <i class="fas fa-plus-square"></i> Створити
-                </a>
-
-                <a href="@Url.Action("Index", "Profile")" class="menu-item profile">
-                    <img src="https://via.placeholder.com/24" alt="Profile Picture ">  Профіль
-                </a>
-            </div>
-        </div>
-        <div class="menu">
-            <a href="#" class="menu-item">
-                <i class="fas fa-comments"></i> Threads
-            </a>
-            <a href="#" class="menu-item">
-                <i class="fas fa-bars"></i> Ще
-            </a>
-        </div>
+<div class="feed-container">
+    <h2>Головна стрічка</h2>
+    <div class="feed-posts">
+        @if (Model.Posts != null && Model.Posts.Any())
+        {
+            @foreach (var post in Model.Posts)
+            {
+                <div class="post-item">
+                    <div class="post-header">
+                        <img src="@post.UserProfilePicture" alt="Profile Picture">
+                        <span>@post.Username</span>
+                    </div>
+                    <div class="post-content">
+                        <img src="@post.ImageUrl" alt="Post Image">
+                        <p>@post.Description</p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Немає постів для відображення.</p>
+        }
     </div>
-
-    
-
-    
-</body>
-</html>
+</div>

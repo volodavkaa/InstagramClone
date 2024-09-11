@@ -1,31 +1,67 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - InstagramClone</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/InstagramClone.styles.css" asp-append-version="true" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Instagram</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css">
+    <link rel="stylesheet" href="~/css/feed.css">
     <link rel="stylesheet" href="~/css/profile.css">
-    @RenderSection("Styles", required: false)
+    <link rel="stylesheet" href="~/css/edit-profile.css">
+    <script src="~/js/edit-profile.js"></script>
+    <script src="~/js/profile.js"></script>
 </head>
 <body>
-    
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="sidebar">
+            <div>
+                <div class="logo">
+                    <h1>Instagram</h1>
+                </div>
+                <div class="menu">
+                    <a href="@Url.Action("Index", "Home")" class="menu-item">
+                        <i class="fas fa-home"></i> Головна
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-search"></i> Пошуковий Запит
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-compass"></i> Цікаве
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-video"></i> Reels
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-envelope"></i> Повідомлення
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-heart"></i> Сповіщення
+                    </a>
+                    <a href="#" class="menu-item">
+                        <i class="fas fa-plus-square"></i> Створити
+                    </a>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - InstagramClone - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <a href="@Url.Action("Index", "Profile")" class="menu-item profile">
+                        <img src="https://via.placeholder.com/24" alt="Profile Picture"> Профіль
+                    </a>
+                </div>
+            </div>
+            <div class="menu">
+                <a href="#" class="menu-item">
+                    <i class="fas fa-comments"></i> Threads
+                </a>
+                <a href="#" class="menu-item">
+                    <i class="fas fa-bars"></i> Ще
+                </a>
+            </div>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    }
+
+    <div class="content-container @(User.Identity.IsAuthenticated ? "" : "full-width")">
+        @RenderBody()
+    </div>
 </body>
 </html>
+

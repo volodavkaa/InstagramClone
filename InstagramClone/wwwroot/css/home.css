@@ -1,0 +1,31 @@
+﻿.content-container {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.feed-container {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post {
+    border: 1px solid #dbdbdb;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #fff;
+}
+
+.post-image img {
+    width: 100%;
+    height: auto;
+}
+
+.post-caption {
+    padding: 10px;
+    font-size: 14px;
+    color: #262626;
+}

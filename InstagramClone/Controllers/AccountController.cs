@@ -2,10 +2,10 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 
 namespace InstagramClone.Controllers
 {
@@ -96,7 +96,6 @@ namespace InstagramClone.Controllers
         {
             if (ModelState.IsValid)
             {
-                
                 var defaultAvatarPath = Path.Combine(_hostingEnvironment.WebRootPath, "images/default-avatar.png");
                 var defaultAvatarBytes = await System.IO.File.ReadAllBytesAsync(defaultAvatarPath);
 
@@ -107,7 +106,7 @@ namespace InstagramClone.Controllers
                     Password = model.Password,
                     ProfileBio = string.Empty,
                     ProfileHeading = string.Empty,
-                    ProfilePicture = defaultAvatarBytes 
+                    ProfilePicture = defaultAvatarBytes
                 };
 
                 _context.Users.Add(user);
