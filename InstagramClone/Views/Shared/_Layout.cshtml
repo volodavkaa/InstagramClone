@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="~/css/feed.css">
     <link rel="stylesheet" href="~/css/profile.css">
     <link rel="stylesheet" href="~/css/edit-profile.css">
+    <link rel="stylesheet" href="~/css/create-post.css" />
     <script src="~/js/edit-profile.js"></script>
     <script src="~/js/profile.js"></script>
+    <script src="~/js/create-post.js"></script>
 </head>
 <body>
     @if (User.Identity.IsAuthenticated && !ViewContext.RouteData.Values["controller"].ToString().Equals("Account", StringComparison.OrdinalIgnoreCase))
@@ -39,7 +41,7 @@
                     <a href="#" class="menu-item">
                         <i class="fas fa-heart"></i> Сповіщення
                     </a>
-                    <a href="#" class="menu-item">
+                    <a href="@Url.Action("Create", "Post")" class="menu-item" id="createPostButton">
                         <i class="fas fa-plus-square"></i> Створити
                     </a>
 

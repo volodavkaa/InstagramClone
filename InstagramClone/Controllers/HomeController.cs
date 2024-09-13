@@ -30,7 +30,7 @@ namespace InstagramClone.Controllers
         private List<PostViewModel> GetPosts()
         {
             return _context.Posts
-                .Include(p => p.User)
+                .Include(p => p.User) 
                 .OrderByDescending(p => p.CreatedAt)
                 .Select(p => new PostViewModel
                 {
@@ -44,6 +44,7 @@ namespace InstagramClone.Controllers
                 })
                 .ToList();
         }
+
 
 
     }
