@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using InstagramClone.ViewModels;
 
 
 namespace InstagramClone.Models

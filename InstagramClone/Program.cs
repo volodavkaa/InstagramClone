@@ -79,6 +79,9 @@ namespace InstagramClone
                     name: "profile",
                     pattern: "profile",
                     defaults: new { controller = "Profile", action = "Index" });
+                endpoints.MapControllerRoute(
+                    name: "create-post",
+                    pattern: "{controller=Post}/{action=Create}/{id?}");
 
             });
 

@@ -11,7 +11,7 @@ namespace InstagramClone.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        // Конструктор для отримання ApplicationDbContext
+        
         public HomeController(ApplicationDbContext context)
         {
             _context = context;
@@ -37,10 +37,14 @@ namespace InstagramClone.Controllers
                     ImageUrl = p.ImageUrl,
                     Content = p.Content,
                     Username = p.User.Username,
-                    UserProfilePicture = p.User.ProfilePicture,
+                    UserProfilePicture = p.User.ProfilePicture != null && p.User.ProfilePicture.Length > 0
+                        ? $"data:image/jpeg;base64,{Convert.ToBase64String(p.User.ProfilePicture)}"
+                        : "/images/default-avatar.png",
                     Description = p.Content
                 })
                 .ToList();
         }
+
+
     }
 }

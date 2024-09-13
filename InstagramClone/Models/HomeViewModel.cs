@@ -1,4 +1,5 @@
-﻿namespace InstagramClone.Models
+﻿using InstagramClone.ViewModels;
+namespace InstagramClone.Models
 {
     public class HomeViewModel
     {
